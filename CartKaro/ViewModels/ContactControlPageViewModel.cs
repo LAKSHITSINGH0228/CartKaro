@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -9,13 +8,13 @@ using CartKaro.Views;
 namespace CartKaro.ViewModels
 {
   [QueryProperty(nameof(ContactId), "Id")]
-  public class AddContactPageViewModel : INotifyPropertyChanged
+  public class ContactControlPageViewModel
   {
-    public ICommand CancelContactCommand { get; }
-    public ICommand SaveContactCommand { get; }
-
     private ContactPageModel contact;
     private string m_errorInEmailValidator;
+
+    public ICommand CancelContactCommand { get; }
+    public ICommand SaveContactCommand { get; }
 
     public bool TextValidator { get; set; }
     public bool EmailValidator { get; set; }
@@ -91,10 +90,16 @@ namespace CartKaro.ViewModels
       }
     }
 
-    public AddContactPageViewModel()
+    public ContactControlPageViewModel()
     {
       CancelContactCommand = new Command(CancelContactAction);
       SaveContactCommand = new Command(SaveContactAction);
+    }
+
+    private void CancelContactAction()
+    {
+      //Shell.Current.GoToAsync("..");
+      Shell.Current.GoToAsync($"//{nameof(ContactsPage)}");
     }
 
     private void SaveContactAction()
@@ -121,18 +126,13 @@ namespace CartKaro.ViewModels
         return;
       }
 
-      ContactRepository.AddContact(new ContactPageModel
-      {
-        Name = EntryName,
-        Email = EntryEmail,
-        Phone = EntryPhone,
-        Address = EntryAddress
-      });
+      contact.Name = EntryName;
+      contact.Email = EntryEmail;
+      contact.Phone = EntryPhone;
+      contact.Address = EntryAddress;
+
+      ContactRepository.UpdateContact(contact.ContactId, contact);
       Shell.Current.GoToAsync("..");
-    }
-    private void CancelContactAction()
-    {
-      Shell.Current.GoToAsync($"//{nameof(ContactsPage)}");
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

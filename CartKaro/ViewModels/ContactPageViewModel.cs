@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using CartKaro.Models;
 using CartKaro.Views;
 
@@ -9,6 +10,7 @@ namespace CartKaro.ViewModels
   public class ContactPageViewModel : INotifyPropertyChanged
   {
     public ObservableCollection<ContactPageModel> ContactDetails { get; set; }
+    public ICommand AddContactCommand { get; }
 
     private ContactPageModel m_selectedContact;
     public ContactPageModel SelectedContact
@@ -27,7 +29,7 @@ namespace CartKaro.ViewModels
         if (m_selectedContact != null)
         {
           //Shell.Current.GoToAsync(nameof(EditContactPage));
-          Shell.Current.GoToAsync($"{nameof(EditContactPage)}?Id={SelectedContact.ContactId}");
+          Shell.Current.GoToAsync($"{nameof(EditContactPage)}?Id={m_selectedContact.ContactId}");
         }
         OnPropertyChanged(nameof(SelectedContact));
       }
@@ -40,6 +42,12 @@ namespace CartKaro.ViewModels
     public ContactPageViewModel()
     {
       ContactDetails = contacts;
+      AddContactCommand = new Command(AddContactAction);
+    }
+
+    private void AddContactAction()
+    {
+      Shell.Current.GoToAsync(nameof(AddContactPage));
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
