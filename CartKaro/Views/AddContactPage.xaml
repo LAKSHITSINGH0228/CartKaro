@@ -8,7 +8,7 @@
         <Frame Padding="10,2,10,2">
             <HorizontalStackLayout>
                 <Label Text="Name" VerticalOptions="Center" WidthRequest="60"/>
-                <Entry x:Name="entryName" VerticalOptions="Center" Text="{Binding EntryName, Mode=TwoWay}">
+                <Entry x:Name="entryName" VerticalOptions="Center" Text="{Binding EntryName, Mode=TwoWay}" HorizontalOptions="Fill">
                     <Entry.Behaviors>
                         <toolkit:TextValidationBehavior
                             MinimumLength="1"

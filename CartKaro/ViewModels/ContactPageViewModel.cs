@@ -9,8 +9,34 @@ namespace CartKaro.ViewModels
 {
   public class ContactPageViewModel : INotifyPropertyChanged
   {
-    public ObservableCollection<ContactPageModel> ContactDetails { get; set; }
+    private ObservableCollection<ContactPageModel> m_contactDetails;
+    public ObservableCollection<ContactPageModel> ContactDetails
+    {
+      get { return m_contactDetails; }
+      set
+      {
+        m_contactDetails = value;
+        OnPropertyChanged(nameof(ContactDetails));
+      }
+    }
     public ICommand AddContactCommand { get; }
+    public ICommand DeleteContactCommand { get; }
+
+    private string m_searchContactText;
+    public string SearchContactText
+    {
+      get{ return m_searchContactText; }
+      set
+      {
+        m_searchContactText = value;
+        if (ContactDetails == null)
+        {
+          ContactDetails = new ObservableCollection<ContactPageModel>();
+        }
+        ContactDetails = ContactRepository.SearchContact(m_searchContactText);
+        OnPropertyChanged(nameof(SearchContactText));
+      }
+    }
 
     private ContactPageModel m_selectedContact;
     public ContactPageModel SelectedContact
@@ -43,11 +69,17 @@ namespace CartKaro.ViewModels
     {
       ContactDetails = contacts;
       AddContactCommand = new Command(AddContactAction);
+      DeleteContactCommand = new Command(DeleteContactAction);
     }
 
     private void AddContactAction()
     {
       Shell.Current.GoToAsync(nameof(AddContactPage));
+    }
+
+    private void DeleteContactAction()
+    {
+      ContactRepository.DeleteContact(SelectedContact.ContactId);
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

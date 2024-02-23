@@ -61,6 +61,43 @@ namespace CartKaro.Models
         Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
       }
     }
+
+    public static void DeleteContact(int contactId)
+    {
+      try
+      {
+        var contact = _contacts.FirstOrDefault(x => x.ContactId == contactId);
+        if (contact != null)
+        {
+          _contacts.Remove(contact);
+        }
+      }
+      catch (Exception ex)
+      {
+        Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+      }
+    }
+
+    public static ObservableCollection<ContactPageModel> SearchContact(string filterText)
+    {
+      var filteredContacts = _contacts.ToList();
+      try
+      {
+       filteredContacts = _contacts.Where(x =>
+            (!string.IsNullOrWhiteSpace(x.Name) && x.Name.StartsWith(filterText, StringComparison.OrdinalIgnoreCase)) ||
+            (!string.IsNullOrWhiteSpace(x.Email) && x.Email.StartsWith(filterText, StringComparison.OrdinalIgnoreCase)) ||
+            (!string.IsNullOrWhiteSpace(x.Phone) && x.Phone.StartsWith(filterText, StringComparison.OrdinalIgnoreCase)) ||
+            (!string.IsNullOrWhiteSpace(x.Address) && x.Address.StartsWith(filterText, StringComparison.OrdinalIgnoreCase))
+        ).ToList();
+
+      return new ObservableCollection<ContactPageModel>(filteredContacts);
+      }
+      catch (Exception ex)
+      {
+        Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+        return new ObservableCollection<ContactPageModel>();
+      }
+    }
   }
 }
 

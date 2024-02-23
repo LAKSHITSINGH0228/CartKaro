@@ -9,7 +9,7 @@
         <Frame Padding="10,2,10,2">
             <HorizontalStackLayout>
                 <Label Text="Name" VerticalOptions="Center" WidthRequest="60"/>
-                <Entry x:Name="entryName" VerticalOptions="Center" Text="{Binding EntryName, Mode=TwoWay}">
+                <Entry x:Name="entryName" VerticalOptions="Center" Text="{Binding EntryName}">
                     <Entry.Behaviors>
                         <toolkit:TextValidationBehavior
                             MinimumLength="1"
@@ -24,7 +24,7 @@
         <Frame Padding="10,2,10,2">
             <HorizontalStackLayout>
                 <Label Text="Email" VerticalOptions="Center" WidthRequest="60"/>
-                <Entry x:Name="entryEmail" VerticalOptions="Center" Text="{Binding EntryEmail, Mode=TwoWay}">
+                <Entry x:Name="entryEmail" VerticalOptions="Center" Text="{Binding EntryEmail}">
                     <Entry.Behaviors>
                         <toolkit:MultiValidationBehavior Flags="ValidateOnAttaching, ValidateOnValueChanged"
                                                          IsNotValid="{Binding EmailValidator}">
