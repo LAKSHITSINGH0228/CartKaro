@@ -9,7 +9,7 @@
         <SearchBar Grid.Row="0"
                       Grid.Column="0"
                       Placeholder="Search Contact"
-                      Background="white"
+                      Background="Transparent"
                       Text="{Binding SearchContact}"></SearchBar>
         <ListView Grid.Row="1"
                     Grid.Column="0"
