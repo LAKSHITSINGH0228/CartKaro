@@ -20,42 +20,42 @@ namespace CartKaro.ViewModels
     public ICommand AddContactCommand { get; }
     public ICommand DeleteContactCommand { get; private set; }
 
-    private string m_searchContactText;
-    public string SearchContactText
+    private string m_searchContact;
+    public string SearchContact
     {
-      get{ return m_searchContactText; }
+      get{ return m_searchContact; }
       set
       {
-        m_searchContactText = value;
+        m_searchContact = value;
         if (ContactDetails == null)
         {
           ContactDetails = new ObservableCollection<ContactPageModel>();
         }
-        ContactDetails = ContactRepository.SearchContact(m_searchContactText);
-        OnPropertyChanged(nameof(SearchContactText));
+        ContactDetails = ContactRepository.SearchContact(m_searchContact);
+        OnPropertyChanged(nameof(SearchContact));
       }
     }
 
-    private ContactPageModel m_selectedContactItem;
-    public ContactPageModel SelectedContactItem
+    private ContactPageModel m_selectedContact;
+    public ContactPageModel SelectedContact
     {
       get
       {
-        if (m_selectedContactItem == null)
+        if (m_selectedContact == null)
         {
-          m_selectedContactItem = new ContactPageModel();
+          m_selectedContact = new ContactPageModel();
         }
-        return m_selectedContactItem;
+        return m_selectedContact;
       }
       set
       {
-        m_selectedContactItem = value;
-        if (m_selectedContactItem != null)
+        m_selectedContact = value;
+        if (m_selectedContact != null)
         {
           //Shell.Current.GoToAsync(nameof(EditContactPage));
-          Shell.Current.GoToAsync($"{nameof(EditContactPage)}?Id={m_selectedContactItem.ContactId}");
+          Shell.Current.GoToAsync($"{nameof(EditContactPage)}?Id={m_selectedContact.ContactId}");
         }
-        OnPropertyChanged(nameof(SelectedContactItem));
+        OnPropertyChanged(nameof(SelectedContact));
       }
     }
 
@@ -75,7 +75,7 @@ namespace CartKaro.ViewModels
 
     private void DeleteContactAction()
     {
-      ContactRepository.DeleteContact(SelectedContactItem.ContactId);
+      ContactRepository.DeleteContact(SelectedContact.ContactId);
     }
   }
 }

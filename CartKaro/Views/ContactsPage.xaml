@@ -9,8 +9,8 @@
         <SearchBar Grid.Row="0"
                       Grid.Column="0"
                       Placeholder="Search Contact"
-                      Background="White"
-                      Text="{Binding SearchContactText}"></SearchBar>
+                      Background="white"
+                      Text="{Binding SearchContact}"></SearchBar>
         <ListView Grid.Row="1"
                     Grid.Column="0"
                     x:Name="listContacts"
@@ -18,7 +18,7 @@
                     ItemsSource="{Binding ContactDetails}"
                     SeparatorColor="Aqua"
                     RowHeight="60"
-                    SelectedItem="{Binding SelectedContactItem}"
+                    SelectedItem="{Binding SelectedContact}"
                     ItemTapped="listContacts_ItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -27,7 +27,7 @@
                           <TextCell.ContextActions>
                             <MenuItem Text="Delete"
                                           IsDestructive="True"
-                                          Command="{Binding BindingContext.DeleteContactCommand, Source={x:Reference Name=listContacts}} "
+                                          Command="{Binding BindingContext.DeleteContactCommand, Source={x:Reference Name=listContacts}}"
                                           CommandParameter="{Binding .}">
                             </MenuItem>
                         </TextCell.ContextActions>

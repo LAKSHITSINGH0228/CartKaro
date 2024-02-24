@@ -111,7 +111,7 @@ namespace CartKaro.Models
       catch (Exception ex)
       {
         Application.Current.MainPage.DisplayAlert("Error: SearchContact", ex.Message, "OK");
-        return new ObservableCollection<ContactPageModel>();
+        return new ObservableCollection<ContactPageModel>(_contacts);
       }
     }
   }
