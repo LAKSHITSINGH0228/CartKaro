@@ -7,6 +7,11 @@ namespace CartKaro.ViewModels
 {
   public class ContactPageViewModel : PropertyChangedNotifier
   {
+    public ICommand AddContactCommand { get; }
+    public ICommand DeleteContactCommand { get; private set; }
+
+    ObservableCollection<ContactPageModel> contacts = ContactRepository.GetContacts();
+
     private ObservableCollection<ContactPageModel> m_contactDetails;
     public ObservableCollection<ContactPageModel> ContactDetails
     {
@@ -17,8 +22,6 @@ namespace CartKaro.ViewModels
         OnPropertyChanged(nameof(ContactDetails));
       }
     }
-    public ICommand AddContactCommand { get; }
-    public ICommand DeleteContactCommand { get; private set; }
 
     private string m_searchContact;
     public string SearchContact
@@ -29,7 +32,7 @@ namespace CartKaro.ViewModels
         m_searchContact = value;
         if (ContactDetails == null)
         {
-          ContactDetails = new ObservableCollection<ContactPageModel>();
+          ContactDetails = new ObservableCollection<ContactPageModel>(contacts);
         }
         ContactDetails = ContactRepository.SearchContact(m_searchContact);
         OnPropertyChanged(nameof(SearchContact));
@@ -59,13 +62,11 @@ namespace CartKaro.ViewModels
       }
     }
 
-    ObservableCollection<ContactPageModel> contacts = ContactRepository.GetContacts();
-
     public ContactPageViewModel()
     {
       ContactDetails = contacts;
       AddContactCommand = new Command(AddContactAction);
-      DeleteContactCommand = new Command(DeleteContactAction);
+      DeleteContactCommand = new Command<ContactPageModel>(DeleteContactAction);
     }
 
     private void AddContactAction()
@@ -73,9 +74,9 @@ namespace CartKaro.ViewModels
       Shell.Current.GoToAsync(nameof(AddContactPage));
     }
 
-    private void DeleteContactAction()
+    private void DeleteContactAction(ContactPageModel contact)
     {
-      ContactRepository.DeleteContact(SelectedContact.ContactId);
+      ContactRepository.DeleteContact(contact);
     }
   }
 }

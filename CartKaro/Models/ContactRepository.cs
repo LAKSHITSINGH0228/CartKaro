@@ -76,11 +76,10 @@ namespace CartKaro.Models
       }
     }
 
-    public static void DeleteContact(int contactId)
+    public static void DeleteContact(ContactPageModel contact)
     {
       try
       {
-        var contact = _contacts.FirstOrDefault(x => x.ContactId == contactId);
         if (contact != null)
         {
           _contacts.Remove(contact);
