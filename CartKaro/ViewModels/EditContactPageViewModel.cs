@@ -1,13 +1,11 @@
 ﻿using CartKaro.Models;
 using CartKaro.Views;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace CartKaro.ViewModels
 {
   [QueryProperty(nameof(ContactId),"Id")]
-  public class EditContactPageViewModel : INotifyPropertyChanged
+  public class EditContactPageViewModel : PropertyChangedNotifier
   {
     private ContactPageModel contact;
     private string m_errorInEmailValidator;
@@ -71,9 +69,6 @@ namespace CartKaro.ViewModels
       }
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    
     public string ContactId
     {
       set
@@ -103,40 +98,42 @@ namespace CartKaro.ViewModels
 
     private void UpdateContactAction()
     {
-      if (TextValidator)
+      try
       {
-        Application.Current.MainPage.DisplayAlert("Error", "Name is required.", "OK");
-        return;
-      }
+        if (TextValidator)
+        {
+          Application.Current.MainPage.DisplayAlert("Error", "Name is required.", "OK");
+          return;
+        }
 
-      if (EmailValidator && EmailTextValidator)
+        if (EmailValidator && EmailTextValidator)
+        {
+          Application.Current.MainPage.DisplayAlert("Error", "Email is Required & Email Format is wrong.", "OK");
+          return;
+        }
+        else if (EmailValidator)
+        {
+          Application.Current.MainPage.DisplayAlert("Error", "Email format is wrong.", "OK");
+          return;
+        }
+        else if (EmailTextValidator)
+        {
+          Application.Current.MainPage.DisplayAlert("Error", "Email is Required.", "OK");
+          return;
+        }
+
+        contact.Name = EntryName;
+        contact.Email = EntryEmail;
+        contact.Phone = EntryPhone;
+        contact.Address = EntryAddress;
+
+        ContactRepository.UpdateContact(contact.ContactId, contact);
+        Shell.Current.GoToAsync("..");
+      }
+      catch (Exception ex)
       {
-        Application.Current.MainPage.DisplayAlert("Error", "Email is Required & Email Format is wrong.", "OK");
-        return;    
+        Application.Current.MainPage.DisplayAlert("Error: UpdateContactAction", ex.Message, "OK");
       }
-      else if (EmailValidator)
-      {
-        Application.Current.MainPage.DisplayAlert("Error", "Email format is wrong.", "OK");
-        return;
-      }
-      else if (EmailTextValidator)
-      {
-        Application.Current.MainPage.DisplayAlert("Error", "Email is Required.", "OK");
-        return;
-      }
-
-      contact.Name = EntryName;
-      contact.Email = EntryEmail;
-      contact.Phone = EntryPhone;
-      contact.Address = EntryAddress;
-
-      ContactRepository.UpdateContact(contact.ContactId, contact);
-      Shell.Current.GoToAsync("..");
-    }
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
   }
 }

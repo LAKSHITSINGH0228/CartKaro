@@ -1,32 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CartKaro.Views.ContactsPage"
-             Title="Contacts">
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="CartKaro.Views.ContactsPage"
+                 Title="Contacts">
     <Grid RowDefinitions="50, *, 50"
-          ColumnDefinitions="*"
-          Padding="5">
+           ColumnDefinitions="*"
+           Padding="5">
         <SearchBar Grid.Row="0"
                       Grid.Column="0"
                       Placeholder="Search Contact"
+                      Background="White"
                       Text="{Binding SearchContactText}"></SearchBar>
         <ListView Grid.Row="1"
-                  Grid.Column="0"
-                  x:Name="listContacts"
-                  Background="Transparent"
-                  ItemsSource="{Binding ContactDetails}"
-                  SeparatorColor="Aqua"
-                  RowHeight="60"
-                  SelectedItem="{Binding SelectedContact}"
-                  ItemTapped="listContacts_ItemTapped">
+                    Grid.Column="0"
+                    x:Name="listContacts"
+                    Background="Transparent"
+                    ItemsSource="{Binding ContactDetails}"
+                    SeparatorColor="Aqua"
+                    RowHeight="60"
+                    SelectedItem="{Binding SelectedContactItem}"
+                    ItemTapped="listContacts_ItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Name, Mode=TwoWay}"
-                                Detail="{Binding Email, Mode=TwoWay}">
+                    <TextCell Text="{Binding Name}"
+                                Detail="{Binding Email}">
                           <TextCell.ContextActions>
                             <MenuItem Text="Delete"
                                           IsDestructive="True"
-                                          Command="{Binding DeleteContactCommand}" 
+                                          Command="{Binding BindingContext.DeleteContactCommand, Source={x:Reference Name=listContacts}} "
                                           CommandParameter="{Binding .}">
                             </MenuItem>
                         </TextCell.ContextActions>
@@ -36,8 +37,8 @@
         </ListView>
 
         <Button Grid.Row="2"
-                Grid.Column="0"
-                Text="Add Contact"
-                Command="{Binding AddContactCommand}"/>
+                  Grid.Column="0"
+                  Text="Add Contact"
+                  Command="{Binding AddContactCommand}"/>
     </Grid>
 </ContentPage>

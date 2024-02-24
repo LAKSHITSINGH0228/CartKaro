@@ -18,33 +18,47 @@ namespace CartKaro.Models
     public static ContactPageModel GetContactById(int contactId)
     {
       var contact = _contacts.FirstOrDefault(x => x.ContactId == contactId);
-      if (contact != null)
+      try
       {
-        return new ContactPageModel
+        if (contact != null)
         {
-          ContactId = contact.ContactId,
-          Address = contact.Address,
-          Name = contact.Name,
-          Email = contact.Email,
-          Phone = contact.Phone
-        };
+          return new ContactPageModel
+          {
+            ContactId = contact.ContactId,
+            Address = contact.Address,
+            Name = contact.Name,
+            Email = contact.Email,
+            Phone = contact.Phone
+          };
+        }
+      }
+      catch (Exception ex)
+      {
+        Application.Current.MainPage.DisplayAlert("Error: GetContactById", ex.Message, "OK");
       }
       return null;
     }
 
     public static void UpdateContact(int contactId, ContactPageModel contact)
     {
-      if (contactId != contact.ContactId) 
+      try
       {
-        return;
+        if (contactId != contact.ContactId)
+        {
+          return;
+        }
+        var contactToUpdate = _contacts.FirstOrDefault(x => x.ContactId == contactId);
+        if (contactToUpdate != null)
+        {
+          contactToUpdate.Name = contact.Name;
+          contactToUpdate.Email = contact.Email;
+          contactToUpdate.Phone = contact.Phone;
+          contactToUpdate.Address = contact.Address;
+        }
       }
-      var contactToUpdate = _contacts.FirstOrDefault(x => x.ContactId == contactId);
-      if (contactToUpdate != null)
+      catch (Exception ex)
       {
-        contactToUpdate.Name = contact.Name;
-        contactToUpdate.Email = contact.Email;
-        contactToUpdate.Phone = contact.Phone;
-        contactToUpdate.Address = contact.Address;
+        Application.Current.MainPage.DisplayAlert("Error: UpdateContact", ex.Message, "OK");
       }
     }
 
@@ -58,7 +72,7 @@ namespace CartKaro.Models
       }
       catch (Exception ex)
       {
-        Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+        Application.Current.MainPage.DisplayAlert("Error: AddContact", ex.Message, "OK");
       }
     }
 
@@ -74,27 +88,29 @@ namespace CartKaro.Models
       }
       catch (Exception ex)
       {
-        Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+        Application.Current.MainPage.DisplayAlert("Error: DeleteContact", ex.Message, "OK");
       }
     }
 
     public static ObservableCollection<ContactPageModel> SearchContact(string filterText)
     {
-      var filteredContacts = _contacts.ToList();
+      if (string.IsNullOrWhiteSpace(filterText))
+      {
+        return new ObservableCollection<ContactPageModel>(_contacts);
+      }
       try
       {
-       filteredContacts = _contacts.Where(x =>
+        var filteredContacts = _contacts.Where(x =>
             (!string.IsNullOrWhiteSpace(x.Name) && x.Name.StartsWith(filterText, StringComparison.OrdinalIgnoreCase)) ||
             (!string.IsNullOrWhiteSpace(x.Email) && x.Email.StartsWith(filterText, StringComparison.OrdinalIgnoreCase)) ||
             (!string.IsNullOrWhiteSpace(x.Phone) && x.Phone.StartsWith(filterText, StringComparison.OrdinalIgnoreCase)) ||
-            (!string.IsNullOrWhiteSpace(x.Address) && x.Address.StartsWith(filterText, StringComparison.OrdinalIgnoreCase))
-        ).ToList();
+            (!string.IsNullOrWhiteSpace(x.Address) && x.Address.StartsWith(filterText, StringComparison.OrdinalIgnoreCase))).ToList();
 
-      return new ObservableCollection<ContactPageModel>(filteredContacts);
+        return new ObservableCollection<ContactPageModel>(filteredContacts);
       }
       catch (Exception ex)
       {
-        Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
+        Application.Current.MainPage.DisplayAlert("Error: SearchContact", ex.Message, "OK");
         return new ObservableCollection<ContactPageModel>();
       }
     }

@@ -1,5 +1,4 @@
-﻿using CartKaro.Models;
-using CartKaro.ViewModels;
+﻿using CartKaro.ViewModels;
 
 namespace CartKaro.Views;
 

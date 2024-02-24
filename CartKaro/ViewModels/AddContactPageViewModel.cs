@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using CartKaro.Models;
 using CartKaro.Views;
 
 namespace CartKaro.ViewModels
 {
   [QueryProperty(nameof(ContactId), "Id")]
-  public class AddContactPageViewModel : INotifyPropertyChanged
+  public class AddContactPageViewModel : PropertyChangedNotifier
   {
     public ICommand CancelContactCommand { get; }
     public ICommand SaveContactCommand { get; }
@@ -73,9 +69,6 @@ namespace CartKaro.ViewModels
       }
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-
-
     public string ContactId
     {
       set
@@ -99,45 +92,47 @@ namespace CartKaro.ViewModels
 
     private void SaveContactAction()
     {
-      if (TextValidator)
+      try
       {
-        Application.Current.MainPage.DisplayAlert("Error", "Name is required.", "OK");
-        return;
-      }
+        if (TextValidator)
+        {
+          Application.Current.MainPage.DisplayAlert("Error", "Name is required.", "OK");
+          return;
+        }
 
-      if (EmailValidator && EmailTextValidator)
-      {
-        Application.Current.MainPage.DisplayAlert("Error", "Email is Required & Email Format is wrong.", "OK");
-        return;
-      }
-      else if (EmailValidator)
-      {
-        Application.Current.MainPage.DisplayAlert("Error", "Email format is wrong.", "OK");
-        return;
-      }
-      else if (EmailTextValidator)
-      {
-        Application.Current.MainPage.DisplayAlert("Error", "Email is Required.", "OK");
-        return;
-      }
+        if (EmailValidator && EmailTextValidator)
+        {
+          Application.Current.MainPage.DisplayAlert("Error", "Email is Required & Email Format is wrong.", "OK");
+          return;
+        }
+        else if (EmailValidator)
+        {
+          Application.Current.MainPage.DisplayAlert("Error", "Email format is wrong.", "OK");
+          return;
+        }
+        else if (EmailTextValidator)
+        {
+          Application.Current.MainPage.DisplayAlert("Error", "Email is Required.", "OK");
+          return;
+        }
 
-      ContactRepository.AddContact(new ContactPageModel
+        ContactRepository.AddContact(new ContactPageModel
+        {
+          Name = EntryName,
+          Email = EntryEmail,
+          Phone = EntryPhone,
+          Address = EntryAddress
+        });
+        Shell.Current.GoToAsync("..");
+      }
+      catch (Exception ex)
       {
-        Name = EntryName,
-        Email = EntryEmail,
-        Phone = EntryPhone,
-        Address = EntryAddress
-      });
-      Shell.Current.GoToAsync("..");
+        Application.Current.MainPage.DisplayAlert("Error: SaveContactAction", ex.Message, "OK");
+      }
     }
     private void CancelContactAction()
     {
       Shell.Current.GoToAsync($"//{nameof(ContactsPage)}");
-    }
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
   }
 }

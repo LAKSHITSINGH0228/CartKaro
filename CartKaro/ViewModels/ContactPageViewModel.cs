@@ -1,13 +1,11 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using CartKaro.Models;
 using CartKaro.Views;
 
 namespace CartKaro.ViewModels
 {
-  public class ContactPageViewModel : INotifyPropertyChanged
+  public class ContactPageViewModel : PropertyChangedNotifier
   {
     private ObservableCollection<ContactPageModel> m_contactDetails;
     public ObservableCollection<ContactPageModel> ContactDetails
@@ -20,7 +18,7 @@ namespace CartKaro.ViewModels
       }
     }
     public ICommand AddContactCommand { get; }
-    public ICommand DeleteContactCommand { get; }
+    public ICommand DeleteContactCommand { get; private set; }
 
     private string m_searchContactText;
     public string SearchContactText
@@ -38,32 +36,30 @@ namespace CartKaro.ViewModels
       }
     }
 
-    private ContactPageModel m_selectedContact;
-    public ContactPageModel SelectedContact
+    private ContactPageModel m_selectedContactItem;
+    public ContactPageModel SelectedContactItem
     {
       get
       {
-        if (m_selectedContact == null)
+        if (m_selectedContactItem == null)
         {
-          m_selectedContact = new ContactPageModel();
+          m_selectedContactItem = new ContactPageModel();
         }
-        return m_selectedContact;
+        return m_selectedContactItem;
       }
       set
       {
-        m_selectedContact = value;
-        if (m_selectedContact != null)
+        m_selectedContactItem = value;
+        if (m_selectedContactItem != null)
         {
           //Shell.Current.GoToAsync(nameof(EditContactPage));
-          Shell.Current.GoToAsync($"{nameof(EditContactPage)}?Id={m_selectedContact.ContactId}");
+          Shell.Current.GoToAsync($"{nameof(EditContactPage)}?Id={m_selectedContactItem.ContactId}");
         }
-        OnPropertyChanged(nameof(SelectedContact));
+        OnPropertyChanged(nameof(SelectedContactItem));
       }
     }
 
     ObservableCollection<ContactPageModel> contacts = ContactRepository.GetContacts();
-
-    public event PropertyChangedEventHandler PropertyChanged;
 
     public ContactPageViewModel()
     {
@@ -79,12 +75,7 @@ namespace CartKaro.ViewModels
 
     private void DeleteContactAction()
     {
-      ContactRepository.DeleteContact(SelectedContact.ContactId);
-    }
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+      ContactRepository.DeleteContact(SelectedContactItem.ContactId);
     }
   }
 }
