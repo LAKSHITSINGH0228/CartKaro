@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CartKaro.Models;
+using CartKaro.Resources.Themes;
 using CartKaro.Views;
 
 namespace CartKaro.ViewModels
@@ -9,6 +10,7 @@ namespace CartKaro.ViewModels
   {
     public ICommand AddContactCommand { get; }
     public ICommand DeleteContactCommand { get; private set; }
+    public ICommand ThemeChangeCommand { get; private set; }
 
     ObservableCollection<ContactPageModel> contacts = ContactRepository.GetContacts();
 
@@ -39,6 +41,12 @@ namespace CartKaro.ViewModels
       }
     }
 
+    private string _themeLabelText= "Default";
+    public string ThemeLabelText
+    {
+      get { return _themeLabelText; }
+      set { _themeLabelText = value; OnPropertyChanged(nameof(ThemeLabelText)); }
+    }
     private ContactPageModel m_selectedContact;
     public ContactPageModel SelectedContact
     {
@@ -67,6 +75,7 @@ namespace CartKaro.ViewModels
       ContactDetails = contacts;
       AddContactCommand = new Command(AddContactAction);
       DeleteContactCommand = new Command<ContactPageModel>(DeleteContactAction);
+      ThemeChangeCommand = new Command(ThemeChangeAction);
     }
 
     private void AddContactAction()
@@ -77,6 +86,17 @@ namespace CartKaro.ViewModels
     private void DeleteContactAction(ContactPageModel contact)
     {
       ContactRepository.DeleteContact(contact);
+    }
+
+    private async void ThemeChangeAction()
+    {
+      var setTheme = await Application.Current.MainPage.DisplayActionSheet("Choose Theme", "Cancel", null, ThemeManager.ThemesNames);
+      //ThemeLabelText = $"Selected Theme : {setTheme}";
+      ThemeLabelText = setTheme;
+      if (!string.IsNullOrWhiteSpace(setTheme) && setTheme != "Cancel")
+      {
+        ThemeManager.SetTheme(setTheme);
+      }
     }
   }
 }
