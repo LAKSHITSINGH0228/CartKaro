@@ -1,18 +1,25 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq.Expressions;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace CartKaro.Models
 {
-    public class PropertyChangedNotifier : INotifyPropertyChanged
+  public class PropertyChangedNotifier : INotifyPropertyChanged
+  {
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
-      public event PropertyChangedEventHandler PropertyChanged;
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 
-      protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    // Overloaded OnPropertyChanged method to accept property name as a parameter
+    protected void OnPropertyChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+    {
+      if (!EqualityComparer<T>.Default.Equals(field, value))
       {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        field = value;
+        OnPropertyChanged(propertyName);
       }
+    }
   }
-} 
-
+}

@@ -11,7 +11,7 @@ namespace CartKaro.ViewModels
     public ICommand DeleteContactCommand { get; private set; }
     public ICommand ThemeChangeCommand { get; private set; }
 
-    ObservableCollection<ContactPageModel> contacts = ContactRepository.GetContacts();
+    readonly ObservableCollection<ContactPageModel> contacts = ContactRepository.GetContacts();
 
     private ObservableCollection<ContactPageModel> m_contactDetails;
     public ObservableCollection<ContactPageModel> ContactDetails
