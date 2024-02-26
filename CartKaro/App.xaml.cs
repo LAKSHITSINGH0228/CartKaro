@@ -13,7 +13,7 @@ public partial class App : Application
   {
     base.OnStart();
 
-		ThemeManager.Initilize();
+		ThemeManager.Initialize();
   }
 }
 

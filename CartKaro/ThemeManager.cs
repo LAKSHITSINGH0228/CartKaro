@@ -1,6 +1,4 @@
-﻿using Themes = CartKaro.Resources.Themes;
-
-namespace CartKaro
+﻿namespace CartKaro
 {
   public static class ThemeManager
   {
@@ -8,60 +6,80 @@ namespace CartKaro
     private const string PrevThemeKey = "previous-theme";
     private static readonly IDictionary<string, ResourceDictionary> _themeMap = new Dictionary<string, ResourceDictionary>
     {
-      [nameof(Themes.Default)] = new Themes.Default(),
-      [nameof(Themes.Dark)] = new Themes.Dark(),
-      [nameof(Themes.Light)] = new Themes.Light(),
+      ["Default"] = new Resources.Themes.Default(),
+      ["Dark"] = new Resources.Themes.Dark(),
+      ["Light"] = new Resources.Themes.Light(),
     };
 
-    public static string SelectedTheme { get; set; } = nameof(Themes.Default);
+    private static string _selectedTheme = "Default";
 
     static ThemeManager()
     {
-       Application.Current.RequestedThemeChanged += Current_RequestedThemeChanged;
+      Application.Current.RequestedThemeChanged += CurrentRequestedThemeChanged;
     }
 
-    public static void Initilize()
+    public static string SelectedTheme
+    {
+      get => _selectedTheme;
+      set
+      {
+        if (_selectedTheme != value)
+        {
+          if (_themeMap.ContainsKey(value))
+          {
+            ApplyTheme(value);
+            _selectedTheme = value;
+          }
+          else
+          {
+            throw new KeyNotFoundException($"Theme '{value}' not found in the theme map.");
+          }
+        }
+      }
+    }
+
+    public static string[] ThemeNames => _themeMap.Keys.ToArray();
+
+    public static string Initialize()
     {
       var selectedTheme = Preferences.Default.Get<string>(ThemeKey, null);
-      if (selectedTheme is null && Application.Current.PlatformAppTheme == AppTheme.Dark)
+      if (selectedTheme == null && Application.Current.RequestedTheme == AppTheme.Dark)
       {
-        selectedTheme = nameof(Themes.Dark);
+        selectedTheme = "Dark";
       }
-      SetTheme(selectedTheme ?? nameof(Themes.Default));
+      SetTheme(selectedTheme ?? "Default");
+
+      return selectedTheme;
     }
 
-    private static void Current_RequestedThemeChanged(object sender, AppThemeChangedEventArgs e)
+    private static void CurrentRequestedThemeChanged(object sender, AppThemeChangedEventArgs e)
     {
       if (e.RequestedTheme == AppTheme.Dark)
       {
-        if (SelectedTheme != nameof(Themes.Dark))
+        if (SelectedTheme != "Dark")
         {
-          Preferences.Default.Set<string>(PrevThemeKey, SelectedTheme);
+          Preferences.Default.Set(PrevThemeKey, SelectedTheme);
         }
-        SetTheme(nameof(Themes.Dark));
+        SetTheme("Dark");
       }
       else
       {
-        var prevTheme = Preferences.Default.Get<string>(PrevThemeKey, nameof(Themes.Default));
+        var prevTheme = Preferences.Default.Get(PrevThemeKey, "Default");
         SetTheme(prevTheme);
-      }  
+      }
     }
-
-    public static string[] ThemesNames = _themeMap.Keys.ToArray();
 
     public static void SetTheme(string themeName)
     {
-      if (SelectedTheme == themeName) return;
+      SelectedTheme = themeName;
+      Preferences.Default.Set(ThemeKey, themeName);
+    }
 
+    private static void ApplyTheme(string themeName)
+    {
       var themeToBeApplied = _themeMap[themeName];
-
       Application.Current.Resources.MergedDictionaries.Clear();
       Application.Current.Resources.MergedDictionaries.Add(themeToBeApplied);
-
-      SelectedTheme = themeName;
-
-      Preferences.Default.Set<string>(ThemeKey, themeName);
     }
   }
 }
-
