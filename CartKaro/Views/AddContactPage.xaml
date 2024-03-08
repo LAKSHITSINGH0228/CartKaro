@@ -2,57 +2,51 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:CartKaro.ViewModels"
+             x:DataType="vm:AddContactPageViewModel"
              x:Class="CartKaro.Views.AddContactPage"
              Title="Add Contact">
-    <VerticalStackLayout Spacing="10" Margin="20, 20, 20, 0">
-        <Frame Padding="10,2,10,2">
-            <HorizontalStackLayout>
-                <Label Text="Name" VerticalOptions="Center" WidthRequest="60"/>
-                <Entry x:Name="entryName" VerticalOptions="Center" Text="{Binding EntryName, Mode=TwoWay}" HorizontalOptions="Fill">
-                    <Entry.Behaviors>
-                        <toolkit:TextValidationBehavior
-                            MinimumLength="1"
-                            IsNotValid="{Binding TextValidator}"
-                            Flags="ValidateOnAttaching, ValidateOnValueChanged" 
-                            />
-                    </Entry.Behaviors>
-                </Entry>
-            </HorizontalStackLayout>
-        </Frame>
-        
-        <Frame Padding="10,2,10,2">
-            <HorizontalStackLayout>
-                <Label Text="Email" VerticalOptions="Center" WidthRequest="60"/>
-                <Entry x:Name="entryEmail" VerticalOptions="Center" Text="{Binding EntryEmail, Mode=TwoWay}">
-                    <Entry.Behaviors>
-                        <toolkit:MultiValidationBehavior Flags="ValidateOnAttaching, ValidateOnValueChanged"
-                                                         IsNotValid="{Binding EmailValidator}">
-                            <toolkit:TextValidationBehavior Flags="ValidateOnAttaching, ValidateOnValueChanged"
-                                                            MinimumLength="1"
-                                                            IsNotValid="{Binding EmailTextValidator}"/>
-                            <toolkit:EmailValidationBehavior Flags="ValidateOnAttaching, ValidateOnValueChanged"
-                                                             IsNotValid="{Binding EmailValidator}"/>
-
-                        </toolkit:MultiValidationBehavior>
-                    </Entry.Behaviors>
-                </Entry>
-            </HorizontalStackLayout>
-        </Frame>
-        
-        <Frame Padding="10,2,10,2">
-            <HorizontalStackLayout>
-                <Label Text="Phone" VerticalOptions="Center" WidthRequest="60"/>
-                <Entry x:Name="entryPhone" VerticalOptions="Center" Text="{Binding EntryPhone}"/>
-            </HorizontalStackLayout>
-        </Frame>
-        
-        <Frame Padding="10,2,10,2">
-            <HorizontalStackLayout>
-                <Label Text="Address" VerticalOptions="Center" WidthRequest="60"/>
-                <Entry x:Name="entryAddress" VerticalOptions="Center" Text="{Binding EntryAddress}"/>
-            </HorizontalStackLayout>
-        </Frame>
-        <Button Text="Save Contact" Command="{Binding SaveContactCommand}"/>
-        <Button Text="Cancel" Command="{Binding CancelContactCommand}"/>
-    </VerticalStackLayout>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Spacing="10" Margin="20">
+                <Frame Padding="10" CornerRadius="5" HasShadow="True">
+                    <Entry x:Name="entryName" VerticalOptions="Center" Text="{Binding EntryName}" Grid.Column="1" Placeholder="Name">
+                        <Entry.Behaviors>
+                            <toolkit:TextValidationBehavior
+                                MinimumLength="1"
+                                IsNotValid="{Binding TextValidator}"
+                                Flags="ValidateOnAttaching, ValidateOnValueChanged" 
+                                />
+                        </Entry.Behaviors>
+                    </Entry>
+                </Frame>
+                
+                <Frame Padding="10" CornerRadius="5" HasShadow="True">
+                    <Entry x:Name="entryEmail" VerticalOptions="Center" Text="{Binding EntryEmail}" Grid.Column="1" Placeholder="Email">
+                        <Entry.Behaviors>
+                            <toolkit:MultiValidationBehavior Flags="ValidateOnAttaching, ValidateOnValueChanged"
+                                                             IsNotValid="{Binding EmailValidator}">
+                                <toolkit:TextValidationBehavior Flags="ValidateOnAttaching, ValidateOnValueChanged"
+                                                                MinimumLength="1"
+                                                                IsNotValid="{Binding EmailTextValidator}"/>
+                                <toolkit:EmailValidationBehavior Flags="ValidateOnAttaching, ValidateOnValueChanged"
+                                                                 IsNotValid="{Binding EmailValidator}"/>
+                            </toolkit:MultiValidationBehavior>
+                        </Entry.Behaviors>
+                    </Entry>
+                </Frame>
+                
+                <Frame Padding="10" CornerRadius="5" HasShadow="True">
+                    <Entry x:Name="entryPhone" VerticalOptions="Center" Text="{Binding EntryPhone}" Grid.Column="1" Placeholder="Phone"/>
+                </Frame>
+                
+                <Frame Padding="10" CornerRadius="5" HasShadow="True">
+                    <Entry x:Name="entryAddress" VerticalOptions="Center" Text="{Binding EntryAddress}" Grid.Column="1" Placeholder="Address"/>
+                </Frame>
+                
+                <Button Text="Save" Command="{Binding SaveContactCommand}" HorizontalOptions="FillAndExpand" />
+                <Button Text="Cancel" Command="{Binding CancelContactCommand}" HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>

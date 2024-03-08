@@ -1,60 +1,55 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                 xmlns:local="clr-namespace:CartKaro"
-                 x:Class="CartKaro.Views.ContactsPage"
-                 Title="Contacts">
-    <Grid RowDefinitions="50, *, 50, 50"                        
-           ColumnDefinitions="*"
-           Padding="5"
-           RowSpacing="5">
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CartKaro"
+             xmlns:vm="clr-namespace:CartKaro.ViewModels"
+             x:Class="CartKaro.Views.ContactsPage"
+             Title="Contacts">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{OnPlatform Default='+ Add Contact', iOS='+'}"
+                     FlexLayout.AlignSelf="Start"
+                     IconImageSource="adduser.png"
+                     Command="{Binding AddContactCommand}" />
+        <ToolbarItem Text="{OnPlatform Default='Theme', iOS='Theme'}"
+                     IconImageSource="theme.png"
+                     Command="{Binding ThemeChangeCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid Padding="5" RowSpacing="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- SearchBar -->
         <SearchBar Grid.Row="0"
-                      Grid.Column="0"
-                      Placeholder="Search Contact"
-                      Background="Transparent"
-                      Text="{Binding SearchContact}"></SearchBar>
+                   Placeholder="Search Contact"
+                   Text="{Binding SearchContact}"
+                   CancelButtonColor="CornflowerBlue" />
+
+        <!-- ListView -->
         <ListView Grid.Row="1"
-                    Grid.Column="0"
-                    x:Name="listContacts"
-                    Background="Transparent"
-                    ItemsSource="{Binding ContactDetails}"
-                    SeparatorColor="Aqua"
-                    RowHeight="60"
-                    SelectedItem="{Binding SelectedContact}"
-                    ItemTapped="listContacts_ItemTapped">
+                  x:Name="listContacts"
+                  Background="Transparent"
+                  ItemsSource="{Binding ContactDetails}"
+                  SeparatorColor="Aqua"
+                  RowHeight="60"
+                  SelectedItem="{Binding SelectedContact}"
+                  ItemTapped="listContacts_ItemTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding Name}"
-                                Detail="{Binding Email}">
-                          <TextCell.ContextActions>
+                              Detail="{Binding Email}">
+                        <TextCell.ContextActions>
                             <MenuItem Text="Delete"
-                                          IsDestructive="True"
-                                          Command="{Binding BindingContext.DeleteContactCommand, Source={x:Reference Name=listContacts}}"
-                                          CommandParameter="{Binding .}">
+                                      IsDestructive="True"
+                                      Command="{Binding BindingContext.DeleteContactCommand, Source={x:Reference Name=listContacts}}"
+                                      CommandParameter="{Binding .}">
                             </MenuItem>
                         </TextCell.ContextActions>
                     </TextCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
-        <Button Grid.Row="2"
-                  Grid.Column="0"
-                  Text="Add Contact"
-                  Command="{Binding AddContactCommand}"/>
-        <Grid Grid.Row="3"
-               Grid.Column="0"
-               ColumnDefinitions="*,  Auto">
-            <Label Grid.Column="0"
-                     Text="{Binding ThemeLabelText, StringFormat='Selected Theme: {0}'}"
-                     VerticalOptions="Center"
-                     HorizontalOptions="Start"/>
-            <Button VerticalOptions="Center"
-                      HorizontalOptions="End"
-                      Grid.Column="1"   
-                      Text="Change Theme"
-                      Command="{Binding ThemeChangeCommand}"/>
-        </Grid>
-        
     </Grid>
 </ContentPage>

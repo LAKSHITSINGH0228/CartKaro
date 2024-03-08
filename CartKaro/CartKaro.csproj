@@ -57,6 +57,13 @@
 	  <None Remove="Models\" />
 	  <None Remove="Views\Controls\" />
 	  <None Remove="Resources\Themes\" />
+	  <None Remove="Resources\Images\add-Contact.png" />
+	  <None Remove="Resources\Images\contact.png" />
+	  <None Remove="Resources\Images\contacts_add.gif" />
+	  <None Remove="Resources\Images\add-user.png" />
+	  <None Remove="Resources\Images\maths.png" />
+	  <None Remove="Resources\Images\addUser.png" />
+	  <None Remove="Resources\Images\theme.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
@@ -68,5 +75,14 @@
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	  <PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Images\add_contact.png" />
+	  <BundleResource Include="Resources\Images\contact.png" />
+	  <BundleResource Include="Resources\Images\contacts_add.gif" />
+	  <BundleResource Include="Resources\Images\add_user.png" />
+	  <BundleResource Include="Resources\Images\maths.png" />
+	  <BundleResource Include="Resources\Images\adduser.png" />
+	  <BundleResource Include="Resources\Images\theme.png" />
 	</ItemGroup>
 </Project>

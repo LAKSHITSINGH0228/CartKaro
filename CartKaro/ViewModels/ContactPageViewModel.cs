@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 using CartKaro.Models;
 using CartKaro.Views;
@@ -40,12 +41,6 @@ namespace CartKaro.ViewModels
       }
     }
 
-    private string _themeLabelText = ThemeManager.Initialize();
-    public string ThemeLabelText
-    {
-      get { return _themeLabelText; }
-      set { _themeLabelText = value; OnPropertyChanged(nameof(ThemeLabelText)); }
-    }
     private ContactPageModel m_selectedContact;
     public ContactPageModel SelectedContact
     {
@@ -90,8 +85,6 @@ namespace CartKaro.ViewModels
     private async void ThemeChangeAction()
     {
       var setTheme = await Application.Current.MainPage.DisplayActionSheet("Choose Theme", "Cancel", null, ThemeManager.ThemeNames);
-      //ThemeLabelText = $"Selected Theme : {setTheme}";
-      ThemeLabelText = setTheme;
       if (!string.IsNullOrWhiteSpace(setTheme) && setTheme != "Cancel")
       {
         ThemeManager.SetTheme(setTheme);
