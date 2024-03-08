@@ -40,7 +40,7 @@
 
     public static string[] ThemeNames => _themeMap.Keys.ToArray();
 
-    public static string Initialize()
+    public static void Initialize()
     {
       var selectedTheme = Preferences.Default.Get<string>(ThemeKey, null);
       if (selectedTheme == null && Application.Current.RequestedTheme == AppTheme.Dark)
@@ -48,8 +48,6 @@
         selectedTheme = "Dark";
       }
       SetTheme(selectedTheme ?? "Default");
-
-      return selectedTheme;
     }
 
     private static void CurrentRequestedThemeChanged(object sender, AppThemeChangedEventArgs e)
