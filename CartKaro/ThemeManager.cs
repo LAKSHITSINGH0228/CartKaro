@@ -6,12 +6,11 @@
     private const string PrevThemeKey = "previous-theme";
     private static readonly IDictionary<string, ResourceDictionary> _themeMap = new Dictionary<string, ResourceDictionary>
     {
-      ["Default"] = new Resources.Themes.Default(),
       ["Dark"] = new Resources.Themes.Dark(),
       ["Light"] = new Resources.Themes.Light(),
     };
 
-    private static string _selectedTheme = "Default";
+    private static string _selectedTheme = "Light";
 
     static ThemeManager()
     {
@@ -47,7 +46,7 @@
       {
         selectedTheme = "Dark";
       }
-      SetTheme(selectedTheme ?? "Default");
+      SetTheme(selectedTheme ?? "Light");
     }
 
     private static void CurrentRequestedThemeChanged(object sender, AppThemeChangedEventArgs e)
@@ -62,7 +61,7 @@
       }
       else
       {
-        var prevTheme = Preferences.Default.Get(PrevThemeKey, "Default");
+        var prevTheme = Preferences.Default.Get(PrevThemeKey, "Light");
         SetTheme(prevTheme);
       }
     }
