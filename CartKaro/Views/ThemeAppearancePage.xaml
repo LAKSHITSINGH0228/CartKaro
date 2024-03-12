@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CartKaro.ViewModels"
+             x:DataType="vm:ThemeAppearancePageViewModel"
+             x:Class="CartKaro.Views.ThemeAppearancePage"
+             Title="Appearance">
+    <VerticalStackLayout Margin="8">
+        <Label Text="Themes"
+               FontAttributes="Bold"
+               FontSize="16"/>
+        <Grid RowDefinitions="Auto, Auto, Auto"
+              ColumnDefinitions="*, 30"
+              Margin="2,0,0,0"> 
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Dark"
+                       VerticalOptions="Center"/>
+                <CheckBox Grid.Row="0"
+                             Grid.Column="1"
+                             IsChecked="{Binding DarkCbChecked}"
+                             VerticalOptions="Center" Color="CornflowerBlue"/>
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Text="Light"
+                       VerticalOptions="Center" />
+                <CheckBox Grid.Row="1"
+                             Grid.Column="1"
+                             IsChecked="{Binding LightCbChecked}"
+                             VerticalOptions="Center" Color="CornflowerBlue"/>
+        </Grid>
+    </VerticalStackLayout>
+
+</ContentPage>

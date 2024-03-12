@@ -11,6 +11,7 @@ namespace CartKaro.ViewModels
     public ICommand AddContactCommand { get; }
     public ICommand DeleteContactCommand { get; private set; }
     public ICommand ThemeChangeCommand { get; private set; }
+    public ICommand SettingsPageCommand { get; private set; }
 
     readonly ObservableCollection<ContactPageModel> contacts = ContactRepository.GetContacts();
 
@@ -70,6 +71,7 @@ namespace CartKaro.ViewModels
       AddContactCommand = new Command(AddContactAction);
       DeleteContactCommand = new Command<ContactPageModel>(DeleteContactAction);
       ThemeChangeCommand = new Command(ThemeChangeAction);
+      SettingsPageCommand = new Command(SettingsPageAction);
     }
 
     private void AddContactAction()
@@ -80,6 +82,11 @@ namespace CartKaro.ViewModels
     private void DeleteContactAction(ContactPageModel contact)
     {
       ContactRepository.DeleteContact(contact);
+    }
+
+    private void SettingsPageAction()
+    {
+      Shell.Current.GoToAsync(nameof(SettingsPage));
     }
 
     private async void ThemeChangeAction()

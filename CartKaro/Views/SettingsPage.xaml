@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CartKaro.ViewModels"
+             x:DataType="vm:SettingsPageViewModel"
+             x:Class="CartKaro.Views.SettingsPage"
+             Title="SettingsPage">
+    <VerticalStackLayout Margin="5,0,0,0"
+                         Spacing="4">
+         <Grid RowDefinitions="Auto" ColumnSpacing="8">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="0"
+                   Source="theme.png"
+                   HeightRequest="20"
+                   WidthRequest="20"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start"/>
+
+            <Label Grid.Column="1"
+                   Text="Appearance"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   FontAttributes="Bold"/>
+
+            <Button Grid.Column="2"
+                    Text="Change Theme      >"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End"
+                    Command="{Binding ThemeChangeCommand}"
+                    Margin="0,0,0,0"/>
+         </Grid>
+    </VerticalStackLayout>
+</ContentPage>

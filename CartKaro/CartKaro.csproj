@@ -64,6 +64,8 @@
 	  <None Remove="Resources\Images\maths.png" />
 	  <None Remove="Resources\Images\addUser.png" />
 	  <None Remove="Resources\Images\theme.png" />
+	  <None Remove="Resources\Images\brightness.png" />
+	  <None Remove="Resources\Images\setting.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
@@ -84,5 +86,7 @@
 	  <BundleResource Include="Resources\Images\maths.png" />
 	  <BundleResource Include="Resources\Images\adduser.png" />
 	  <BundleResource Include="Resources\Images\theme.png" />
+	  <BundleResource Include="Resources\Images\brightness.png" />
+	  <BundleResource Include="Resources\Images\setting.png" />
 	</ItemGroup>
 </Project>

@@ -1,4 +1,6 @@
-﻿namespace CartKaro
+﻿using CartKaro.Models;
+
+namespace CartKaro
 {
   public static class ThemeManager
   {
@@ -6,8 +8,9 @@
     private const string PrevThemeKey = "previous-theme";
     private static readonly IDictionary<string, ResourceDictionary> _themeMap = new Dictionary<string, ResourceDictionary>
     {
-      ["Dark"] = new Resources.Themes.Dark(),
       ["Light"] = new Resources.Themes.Light(),
+      ["Dark"] = new Resources.Themes.Dark(),
+      ["System default"] = new Resources.Themes.Default(),
     };
 
     private static string _selectedTheme = "Light";
@@ -41,7 +44,7 @@
 
     public static void Initialize()
     {
-      var selectedTheme = Preferences.Default.Get<string>(ThemeKey, null);
+      var selectedTheme = Preferences.Get(ThemeKey, null);
       if (selectedTheme == null && Application.Current.RequestedTheme == AppTheme.Dark)
       {
         selectedTheme = "Dark";
@@ -74,8 +77,10 @@
 
     private static void ApplyTheme(string themeName)
     {
+      var styles = new Resources.Themes.Styles();
       var themeToBeApplied = _themeMap[themeName];
       Application.Current.Resources.MergedDictionaries.Clear();
+      Application.Current.Resources.MergedDictionaries.Add(styles);
       Application.Current.Resources.MergedDictionaries.Add(themeToBeApplied);
     }
   }

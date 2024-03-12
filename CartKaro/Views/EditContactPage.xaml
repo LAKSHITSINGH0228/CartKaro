@@ -45,8 +45,14 @@
                     <Entry x:Name="entryAddress" VerticalOptions="Center" Text="{Binding EntryAddress}" Grid.Column="1" Placeholder="Address"/>
                 </Frame>
                 
-                <Button Text="Update" Command="{Binding UpdateContactCommand}" HorizontalOptions="FillAndExpand" />
-                <Button Text="Cancel" Command="{Binding CancelContactCommand}" HorizontalOptions="FillAndExpand" />
+                <Button Text="Update" Command="{Binding UpdateContactCommand}" HorizontalOptions="End"
+                        BackgroundColor="{DynamicResource ButtonBgColor}"
+                        FontAutoScalingEnabled="False"
+                        TextColor="{DynamicResource ButtonTextColor}"/>
+                <Button Text="Cancel" Command="{Binding CancelContactCommand}" HorizontalOptions="End"
+                        BackgroundColor="{DynamicResource ButtonBgColor}"
+                        IsEnabled="False"
+                        TextColor="{DynamicResource ButtonTextColor}"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

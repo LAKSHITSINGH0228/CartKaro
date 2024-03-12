@@ -5,8 +5,22 @@
     <Color x:Key="Primary">#141414</Color>
     <Color x:Key="Secondary">#DFD8F7</Color>
     <Color x:Key="Tertiary">Black</Color>
+
     <Color x:Key="PageBg">Black</Color>
     <Color x:Key="LabelTextColor">white</Color>
+    <Color x:Key="ButtonBgColor">#72ACF1</Color>
+    <Color x:Key="ButtonTextColor">Black</Color>
+    <Color x:Key="ShellTitleColor">White</Color>
+    <Color x:Key="SeparateLvColor">White</Color>
+    <Color x:Key="TextLvColor">White</Color>
+    <Color x:Key="DetailLvColor">White</Color>
+    <Color x:Key="SearchBarBgColor">LightGray</Color>
+    <Color x:Key="SearchBarTextColor">White</Color>
+    <Color x:Key="SearchBarPlaceholderColor">White</Color>
+    <Color x:Key="ContentPageBgColor">Black</Color>
+    <Color x:Key="EntryBgColor">Black</Color>
+    <Color x:Key="EntryTextColor">White</Color>
+
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
