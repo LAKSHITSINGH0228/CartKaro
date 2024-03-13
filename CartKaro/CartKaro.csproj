@@ -66,6 +66,8 @@
 	  <None Remove="Resources\Images\theme.png" />
 	  <None Remove="Resources\Images\brightness.png" />
 	  <None Remove="Resources\Images\setting.png" />
+	  <None Remove="Resources\Images\settings.svg" />
+	  <None Remove="Resources\Images\gear.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
@@ -88,5 +90,7 @@
 	  <BundleResource Include="Resources\Images\theme.png" />
 	  <BundleResource Include="Resources\Images\brightness.png" />
 	  <BundleResource Include="Resources\Images\setting.png" />
+	  <BundleResource Include="Resources\Images\settings.svg" />
+	  <BundleResource Include="Resources\Images\gear.png" />
 	</ItemGroup>
 </Project>

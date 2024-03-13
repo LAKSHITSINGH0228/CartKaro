@@ -4,7 +4,8 @@
              xmlns:vm="clr-namespace:CartKaro.ViewModels"
              x:DataType="vm:SettingsPageViewModel"
              x:Class="CartKaro.Views.SettingsPage"
-             Title="SettingsPage">
+             Title="Settings">
+
     <VerticalStackLayout Margin="5,0,0,0"
                          Spacing="4">
          <Grid RowDefinitions="Auto" ColumnSpacing="8">

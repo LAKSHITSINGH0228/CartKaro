@@ -77,10 +77,8 @@ namespace CartKaro
 
     private static void ApplyTheme(string themeName)
     {
-      var styles = new Resources.Themes.Styles();
       var themeToBeApplied = _themeMap[themeName];
       Application.Current.Resources.MergedDictionaries.Clear();
-      Application.Current.Resources.MergedDictionaries.Add(styles);
       Application.Current.Resources.MergedDictionaries.Add(themeToBeApplied);
     }
   }

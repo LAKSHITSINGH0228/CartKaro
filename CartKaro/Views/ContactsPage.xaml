@@ -6,12 +6,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="{OnPlatform Default='+ Add Contact', iOS='+'}"
-                     FlexLayout.AlignSelf="Start"
-                     IconImageSource="adduser.png"
                      Command="{Binding AddContactCommand}" />
-        <ToolbarItem Text="Settings"
-                     IconImageSource="setting.png"
-                     Command="{Binding SettingsPageCommand}" />
     </ContentPage.ToolbarItems>
 
     <Grid Padding="5"
@@ -19,6 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
             <!-- SearchBar -->
@@ -52,5 +48,22 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Frame HorizontalOptions="End"
+               Margin="0,0,5,0"
+               Grid.Row="2"
+               HeightRequest="50"
+               WidthRequest="50"
+               BackgroundColor="Transparent"
+               BorderColor="Transparent"
+               CornerRadius="25"> <!-- Half of the button's width and height -->
+            <ImageButton Source="setting.png"
+                         Aspect="AspectFit"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         HeightRequest="40"
+                         WidthRequest="40"
+                         Command="{Binding SettingsPageCommand}"/>
+        </Frame>
+
     </Grid>
 </ContentPage>

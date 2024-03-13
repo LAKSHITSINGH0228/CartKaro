@@ -71,12 +71,12 @@ namespace CartKaro.ViewModels
       AddContactCommand = new Command(AddContactAction);
       DeleteContactCommand = new Command<ContactPageModel>(DeleteContactAction);
       ThemeChangeCommand = new Command(ThemeChangeAction);
-      SettingsPageCommand = new Command(SettingsPageAction);
+      SettingsPageCommand = new Command(async () => await SettingsPageAction());
     }
 
     private void AddContactAction()
     {
-      Shell.Current.GoToAsync(nameof(AddContactPage));
+      Shell.Current.Navigation.PushAsync(new AddContactPage());
     }
 
     private void DeleteContactAction(ContactPageModel contact)
@@ -84,9 +84,9 @@ namespace CartKaro.ViewModels
       ContactRepository.DeleteContact(contact);
     }
 
-    private void SettingsPageAction()
+    private async Task SettingsPageAction()
     {
-      Shell.Current.GoToAsync(nameof(SettingsPage));
+      await Shell.Current.Navigation.PushAsync(new SettingsPage());
     }
 
     private async void ThemeChangeAction()
