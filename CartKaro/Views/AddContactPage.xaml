@@ -11,15 +11,18 @@
         <ScrollView>
             <StackLayout Spacing="10" Margin="20">
                 <Frame Padding="10" CornerRadius="5" HasShadow="True">
-                    <Entry x:Name="entryName" VerticalOptions="Center" Text="{Binding EntryName}" Grid.Column="1" Placeholder="Name">
-                        <Entry.Behaviors>
+                    <VerticalStackLayout >
+                        <Label />
+                        <Entry x:Name="entryName" VerticalOptions="Center" Text="{Binding EntryName}" Grid.Column="1" Placeholder="Name">
+                            <Entry.Behaviors>
                             <toolkit:TextValidationBehavior
                                 MinimumLength="1"
                                 IsNotValid="{Binding TextValidator}"
                                 Flags="ValidateOnAttaching, ValidateOnValueChanged" 
                                 />
-                        </Entry.Behaviors>
-                    </Entry>
+                            </Entry.Behaviors>
+                        </Entry>
+                    </VerticalStackLayout>
                 </Frame>
                 
                 <Frame Padding="10" CornerRadius="5" HasShadow="True">

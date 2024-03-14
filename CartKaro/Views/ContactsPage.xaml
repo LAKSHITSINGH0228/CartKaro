@@ -18,10 +18,18 @@
         </Grid.RowDefinitions>
 
             <!-- SearchBar -->
-        <SearchBar Grid.Row="0"
-                   Placeholder="Search Contact"
-                   Text="{Binding SearchContact}"
-                   BackgroundColor="{DynamicResource SearchBarBgColor}"/>
+        <Grid Grid.Row="0" Margin="25,10,25,10">
+             <RoundRectangle CornerRadius="25"
+                             Fill="#311B45"
+                             HeightRequest="45"/>
+             
+             <SearchBar CancelButtonColor="CornflowerBlue"
+                        Placeholder="Search by name"
+                        TextColor="White"
+                        VerticalOptions="Center"
+                        PlaceholderColor="#AC9DB9"/>
+
+         </Grid>
 
         <!-- ListView -->
         <ListView Grid.Row="1"

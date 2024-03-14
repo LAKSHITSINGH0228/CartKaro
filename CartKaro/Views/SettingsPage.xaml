@@ -4,15 +4,16 @@
              xmlns:vm="clr-namespace:CartKaro.ViewModels"
              x:DataType="vm:SettingsPageViewModel"
              x:Class="CartKaro.Views.SettingsPage"
-             Title="Settings">
+             Title="Settings"
+             BackgroundColor="{DynamicResource PageBg}">
 
     <VerticalStackLayout Margin="5,0,0,0"
                          Spacing="4">
          <Grid RowDefinitions="Auto" ColumnSpacing="8">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
               </Grid.ColumnDefinitions>
 
             <Image Grid.Column="0"
@@ -26,7 +27,8 @@
                    Text="Appearance"
                    VerticalOptions="Center"
                    HorizontalOptions="Start"
-                   FontAttributes="Bold"/>
+                   FontAttributes="Bold"
+                   TextColor="{DynamicResource TextLvColor}"/>
 
             <Button Grid.Column="2"
                     Text="Change Theme      >"

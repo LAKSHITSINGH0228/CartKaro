@@ -41,13 +41,17 @@ namespace CartKaro.ViewModels
 
     public ThemeAppearancePageViewModel()
     {
-      if (ThemeManager.SelectedTheme == "Dark")
+      switch (ThemeManager.SelectedTheme)
       {
-        DarkCbChecked = true;
-      }
-      else if (ThemeManager.SelectedTheme == "Light")
-      {
-        LightCbChecked = true;
+        case "Dark":
+          DarkCbChecked = true;
+          break;
+        case "Light":
+          LightCbChecked = true;
+          break;
+        default:
+          LightCbChecked = true;
+          break;
       }
     }
   }

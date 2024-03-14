@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using CartKaro.Models;
 using CartKaro.Views;
+using Microsoft.Maui.Handlers;
 
 namespace CartKaro.ViewModels
 {
@@ -29,7 +30,7 @@ namespace CartKaro.ViewModels
     private string m_searchContact;
     public string SearchContact
     {
-      get{ return m_searchContact; }
+      get { return m_searchContact; }
       set
       {
         m_searchContact = value;
@@ -67,6 +68,7 @@ namespace CartKaro.ViewModels
 
     public ContactPageViewModel()
     {
+      ModifySearchBar();
       ContactDetails = contacts;
       AddContactCommand = new Command(AddContactAction);
       DeleteContactCommand = new Command<ContactPageModel>(DeleteContactAction);
@@ -96,6 +98,22 @@ namespace CartKaro.ViewModels
       {
         ThemeManager.SetTheme(setTheme);
       }
+    }
+
+    private void ModifySearchBar()
+    {
+      SearchBarHandler.Mapper.AppendToMapping("CustomSearchIconColor", (handler, view) =>
+      {
+#if ANDROID || IOS
+        var context = handler.PlatformView.Context;
+        var searchIconId = context!.Resources!.GetIdentifier("search_mag_icon", "id", context.PackageName);
+        if (searchIconId != 0)
+        {
+          var searchIcon = handler.PlatformView.FindViewById<Android.Widget.ImageView>(searchIconId);
+          searchIcon!.SetColorFilter(Android.Graphics.Color.Rgb(172, 157, 185), Android.Graphics.PorterDuff.Mode.Dst);
+        }
+#endif
+      });
     }
   }
 }

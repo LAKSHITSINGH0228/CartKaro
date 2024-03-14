@@ -55,7 +55,6 @@
 	  <None Remove="Views\" />
 	  <None Remove="ViewModels\" />
 	  <None Remove="Models\" />
-	  <None Remove="Views\Controls\" />
 	  <None Remove="Resources\Themes\" />
 	  <None Remove="Resources\Images\add-Contact.png" />
 	  <None Remove="Resources\Images\contact.png" />
@@ -73,12 +72,13 @@
 	  <Folder Include="Views\" />
 	  <Folder Include="ViewModels\" />
 	  <Folder Include="Models\" />
-	  <Folder Include="Views\Controls\" />
+	  <Folder Include="Resources\Themes\" />
 	  <Folder Include="Resources\Themes\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	  <PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 	</ItemGroup>
 	<ItemGroup>
 	  <BundleResource Include="Resources\Images\add_contact.png" />
