@@ -17,8 +17,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-            <!-- SearchBar -->
-        <Grid Grid.Row="0" Margin="25,10,25,10">
+        <!-- SearchBar -->
+        <Grid Grid.Row="0" Margin="10,5,10,5">
              <RoundRectangle CornerRadius="25"
                              Fill="#311B45"
                              HeightRequest="45"/>
@@ -27,8 +27,8 @@
                         Placeholder="Search by name"
                         TextColor="White"
                         VerticalOptions="Center"
-                        PlaceholderColor="#AC9DB9"/>
-
+                        PlaceholderColor="#AC9DB9"
+                        Text="{Binding SearchContact}"/>
          </Grid>
 
         <!-- ListView -->

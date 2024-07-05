@@ -104,7 +104,7 @@ namespace CartKaro.ViewModels
     {
       SearchBarHandler.Mapper.AppendToMapping("CustomSearchIconColor", (handler, view) =>
       {
-#if ANDROID || IOS
+#if ANDROID
         var context = handler.PlatformView.Context;
         var searchIconId = context!.Resources!.GetIdentifier("search_mag_icon", "id", context.PackageName);
         if (searchIconId != 0)
